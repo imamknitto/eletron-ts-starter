@@ -15,6 +15,7 @@ A desktop starter: **Electron** as the shell, **React** in the renderer (Vite + 
 | Package manager | **pnpm**                | `.npmrc`: `node-linker=hoisted`                                                        |
 | Lint            | ESLint `^9` (flat)      | `typescript-eslint` recommended + React Hooks + React Refresh                          |
 | Shipping        | electron-builder        | Config in `electron-builder.json`                                                      |
+| Cross-env       | `cross-env` (devDep)    | Sets `NODE_ENV` in `dev:electron` so dev mode works on Windows, macOS, and Linux       |
 
 **Node.js:** **18+** — the main process already touches APIs like `fs.statfsSync` that expect a modern runtime.
 
@@ -74,7 +75,15 @@ Under the hood that’s `concurrently`:
 - `pnpm dev:react` → `vite` (dev server on **port 4006**, `strictPort: true` — another port won’t silently win)
 - `pnpm dev:electron` → `electron .` with `NODE_ENV=development`
 
-**Windows note:** `dev:electron` uses Unix-style `NODE_ENV=development`. If the variable doesn’t apply in your shell, Electron may not hit the dev server (won’t load `localhost:4006`). Fix: set `NODE_ENV=development` manually, or adjust the script (e.g. `cross-env` — already in devDependencies).
+**Windows (and cross-platform) dev:** `NODE_ENV` can’t be set the Unix way (`VAR=value cmd`) in `cmd.exe`, so the repo uses **[cross-env](https://github.com/kentcdodds/cross-env)** in `dev:electron`. That keeps dev mode consistent everywhere (Electron loads `http://localhost:4006` when `isDev()` is true — see `src/electron/utils.ts`).
+
+In `package.json`:
+
+```json
+"dev:electron": "cross-env NODE_ENV=development electron ."
+```
+
+`cross-env` is listed under **devDependencies**; install it with the rest of the toolchain (`pnpm install`).
 
 Preview the renderer build without Electron:
 

@@ -7,7 +7,7 @@
     "scripts": {
         "dev": "concurrently \"pnpm dev:electron\" \"pnpm dev:react\"",
         "dev:react": "vite",
-        "dev:electron": "NODE_ENV=development electron .",
+        "dev:electron": "cross-env NODE_ENV=development electron .",
         "build": "tsc -b && vite build",
         "lint": "eslint .",
         "preview": "vite preview",
