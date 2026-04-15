@@ -1,5 +1,5 @@
 {
-    "appId": "com.example.electron-react-template",
+    "appId": "com.electron-ts-starter",
     "extraResources": [
         "dist-electron/preload.cjs"
     ],
