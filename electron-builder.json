@@ -1,0 +1,28 @@
+{
+    "appId": "com.example.electron-react-template",
+    "extraResources": [
+        "dist-electron/preload.cjs"
+    ],
+    "icon": "./desktopIconx512.png",
+    "files": [
+        "dist-electron",
+        "dist-react"
+    ],
+    "mac": {
+        "target": [
+            "dmg"
+        ]
+    },
+    "win": {
+        "target": [
+            "portable",
+            "nsis"
+        ]
+    },
+    "linux": {
+        "target": [
+            "AppImage"
+        ],
+        "category": "Utility"
+    }
+}
